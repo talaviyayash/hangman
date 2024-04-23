@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .head {
+        border: 4px solid black;
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50px;
+      }
+      .body {
+        width: 60px;
+        border: 2px solid black;
+        transform: rotateZ(90deg);
+        position: relative;
+        bottom: 75px;
+        left: 42px;
+      }
+      #container {
+        margin-left: 50px;
+        height: 150px;
+      }
+      .allIn {
+        height: 150px;
+      }
+      .right-hand {
+        width: 60px;
+        border: 2px solid black;
+        transform: rotateZ(-20deg);
+        position: relative;
+        left: 14px;
+        bottom: 87px;
+      }
+      .left-hand {
+        width: 60px;
+        border: 2px solid black;
+        transform: rotateZ(20deg);
+        position: relative;
+        left: 72px;
+        bottom: 89px;
+      }
+
+      .right-foot {
+        width: 60px;
+        border: 2px solid black;
+        transform: rotateZ(-20deg);
+        position: relative;
+        left: 14px;
+        bottom: 43px;
+      }
+      .left-foot {
+        width: 60px;
+        border: 2px solid black;
+        transform: rotateZ(20deg);
+        position: relative;
+        left: 72px;
+        bottom: 46px;
+      }
+
+      #findAlphabate {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="allIn">
+      <div class="right-foot"></div>
+      <div class="left-foot"></div>
+    </div>
+    <div class="hint">
+      Hint: Difficult or impossible to understand, explain, or identify.
+    </div>
+    <div id="findAlphabate"></div>
+    <div id="alphabate"></div>
+    <script>
+      const btn = document.getElementById("alphabate");
+      const allIn = document.getElementById("allIn");
+      console.log(allIn);
+      const findAlphabate = document.getElementById("findAlphabate");
+      const arrForAlphabate = "abcdefghijklmnopqrstuvwxyz".split("");
+      const bodyPart = [
+        `<div id="container">
+      <div class="head"></div>
+    </div>`,
+        `<div class="body"></div>`,
+        `<div class="right-hand"></div>`,
+        `<div class="left-hand"></div>`,
+        `<div class="right-foot"></div>`,
+        `<div class="left-foot"></div>`,
+      ];
+      let forBodyPart = 0;
+      const alradyFindedElement = [];
+      arrForAlphabate.forEach((val) => {
+        btn.innerHTML =
+          btn.innerHTML +
+          `<button id="${val}"  onclick="handelClick(event)"">${val}</button>`;
+      });
+      const word = "yash".split("");
+      word.forEach((val) => {
+        findAlphabate.innerHTML = findAlphabate.innerHTML + `_  `;
+      });
+      function handelClick(e) {
+        if (!alradyFindedElement.includes(event.target.innerHTML)) {
+          if (word.includes(event.target.innerHTML)) {
+            alradyFindedElement.push(event.target.innerHTML);
+            findAlphabate.innerHTML = "";
+            word.forEach((val) => {
+              if (alradyFindedElement.includes(val)) {
+                findAlphabate.innerHTML = findAlphabate.innerHTML + `${val}  `;
+              } else {
+                findAlphabate.innerHTML = findAlphabate.innerHTML + `_  `;
+              }
+            });
+            if (alradyFindedElement.length == word.length) {
+              confirm("you win");
+            }
+          } else {
+            allIn.innerHTML = allIn.innerHTML + bodyPart[forBodyPart];
+            ++forBodyPart;
+            if (forBodyPart == 6) {
+              confirm("U lose");
+            }
+          }
+        }
+        e.target.disabled = true;
+      }
+    </script>
+  </body>
+</html>
